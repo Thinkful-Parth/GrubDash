@@ -21,44 +21,30 @@ function orderExists(req, res, next) {
  *
  */
 function hasAddress(req, res, next) {
-  /**deliverTo property is missing	            Order must include a deliverTo
-deliverTo property is empty ""	            Order must include a deliverTo
- */
   if (req.body.data.deliverTo == "" || !req.body.data.deliverTo) {
     errors.push("Order must include a deliverTo");
   }
   next();
 }
 function hasMobile(req, res, next) {
-  /**mobileNumber property is missing	        Order must include a mobileNumber
-mobileNumber property is empty ""	        Order must include a mobileNumber */
   if (req.body.data.mobileNumber == "" || !req.body.data.mobileNumber) {
     errors.push("Order must include a mobileNumber");
   }
   next();
 }
 function hasDishes(req, res, next) {
-  /**dishes property is missing	                Order must include a dish
-   */
   if (!Array.isArray(req.body.data.dishes)) {
     errors.push("Order must include a dish");
   }
   next();
 }
 function isFilledArray(req, res, next) {
-  /**dishes property is not an array	            Order must include at least one dish
-dishes array is empty	                    Order must include at least one dish */
   if (!Array.isArray(req.body.data.dishes) || req.body.data.dishes.length < 1) {
     errors.push("Order must include at least one dish");
   }
   next();
 }
 function dishQuantityCheck(req, res, next) {
-  /**
-a dish quantity property is missing	        Dish ${index} must have a quantity that is an integer greater than 0
-a dish quantity property is zero or less	Dish ${index} must have a quantity that is an integer greater than 0
-a dish quantity property is not an integer	Dish ${index} must have a quantity that is an integer greater than 0
-*/
   const dishes = req.body.data.dishes;
   if (Array.isArray(req.body.data.dishes)) {
     for (index = 0; index < dishes.length; index++) {
